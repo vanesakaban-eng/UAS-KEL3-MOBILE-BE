@@ -1,0 +1,25 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const mobileController_1 = require("../controllers/mobileController");
+const authMiddleware_1 = require("../middleware/authMiddleware");
+const router = (0, express_1.Router)();
+const authenticated = (handler) => (req, res, next) => {
+    void handler(req, res).catch(next);
+};
+router.post('/auth/register', mobileController_1.register);
+router.post('/auth/login', mobileController_1.login);
+router.post('/auth/forgot-password', mobileController_1.requestPasswordReset);
+router.post('/auth/reset-password', mobileController_1.resetPassword);
+router.post('/auth/logout', (_req, res) => res.json({ message: 'Logout berhasil.' }));
+router.get('/profile', authMiddleware_1.requireAuth, authenticated(mobileController_1.getProfile));
+router.put('/profile', authMiddleware_1.requireAuth, authenticated(mobileController_1.updateProfile));
+router.get('/dashboard', authMiddleware_1.requireAuth, authenticated(mobileController_1.getDashboard));
+router.get('/budget', authMiddleware_1.requireAuth, authenticated(mobileController_1.getBudget));
+router.put('/budget', authMiddleware_1.requireAuth, authenticated(mobileController_1.saveBudget));
+router.get('/transactions', authMiddleware_1.requireAuth, authenticated(mobileController_1.listTransactions));
+router.post('/transactions', authMiddleware_1.requireAuth, authenticated(mobileController_1.createTransaction));
+router.get('/savings', authMiddleware_1.requireAuth, authenticated(mobileController_1.listSavings));
+router.post('/savings', authMiddleware_1.requireAuth, authenticated(mobileController_1.createSaving));
+router.post('/savings/:id/deposits', authMiddleware_1.requireAuth, authenticated(mobileController_1.addSavingDeposit));
+exports.default = router;
