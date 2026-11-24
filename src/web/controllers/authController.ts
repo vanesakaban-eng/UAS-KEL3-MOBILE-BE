@@ -20,8 +20,15 @@ const transporter = nodemailer.createTransport({
 // 1. REGISTER (Menyimpan data ke MySQL)
 export const register = async (req: Request, res: Response): Promise<void> => {
   try {
-    const { nama, email, whatsapp, password, role } = req.body;
+    const nama = req.body.nama || req.body.name || req.body.username;
+    const { email, password } = req.body;
+    const whatsapp = req.body.whatsapp || req.body.phoneNumber || '';
+    const userRole = req.body.role || 'User';
 
+    if (!nama || !email || !password) {
+      res.status(400).json({ message: 'Nama, email, dan password wajib diisi!' });
+      return;
+    }
 
     // Cek apakah email sudah terdaftar
     const [existingUsers] = await db.query<RowDataPacket[]>(
@@ -29,26 +36,20 @@ export const register = async (req: Request, res: Response): Promise<void> => {
       [email]
     );
 
-
     if (existingUsers.length > 0) {
       res.status(400).json({ message: 'Email sudah terdaftar!' });
       return;
     }
 
-
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
-
-    const userRole = 'Admin';
     const userWhatsapp = whatsapp || '';
-
 
     // Simpan ke MySQL
     const [result] = await db.query<ResultSetHeader>(
       'INSERT INTO users (nama, email, whatsapp, password, role) VALUES (?, ?, ?, ?, ?)',
       [nama, email, userWhatsapp, hashedPassword, userRole]
     );
-
 
     res.status(201).json({
       message: 'Registrasi berhasil!',

@@ -7,7 +7,7 @@ exports.listCategories = listCategories;
 exports.createCategory = createCategory;
 exports.updateCategory = updateCategory;
 exports.deleteCategory = deleteCategory;
-const db_1 = __importDefault(require("../config/db"));
+const db_1 = __importDefault(require("../mobile/config/db"));
 const auditService_1 = require("./auditService");
 async function listCategories(typeOnly) {
     let query = 'SELECT id, name, type, icon, color, is_active, created_at FROM master_categories WHERE is_active = TRUE';

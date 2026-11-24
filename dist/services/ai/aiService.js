@@ -8,7 +8,7 @@ exports.anonymizePii = anonymizePii;
 exports.validateAiJson = validateAiJson;
 exports.generateFinancialInsight = generateFinancialInsight;
 exports.verifyAiResult = verifyAiResult;
-const db_1 = __importDefault(require("../../config/db"));
+const db_1 = __importDefault(require("../../mobile/config/db"));
 const auditService_1 = require("../auditService");
 /**
  * Filter Prompt Injection:

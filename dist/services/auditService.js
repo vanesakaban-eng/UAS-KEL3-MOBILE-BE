@@ -4,7 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.logAudit = logAudit;
-const db_1 = __importDefault(require("../config/db"));
+const db_1 = __importDefault(require("../mobile/config/db"));
 async function logAudit(params) {
     try {
         const ipAddress = params.req?.ip ||

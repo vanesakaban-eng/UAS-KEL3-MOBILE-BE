@@ -4,7 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getWebDashboardData = getWebDashboardData;
-const db_1 = __importDefault(require("../config/db"));
+const db_1 = __importDefault(require("../mobile/config/db"));
 async function getWebDashboardData() {
     // 1. Hitung total user & aktivitas (case-insensitive role)
     const [[userStats]] = (await db_1.default.query('SELECT COUNT(*) as totalUsers, SUM(CASE WHEN LOWER(role) = "admin" THEN 1 ELSE 0 END) as totalAdmin FROM users'));

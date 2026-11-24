@@ -9,7 +9,7 @@ dotenv_1.default.config({
     path: process.env.ENV_FILE || node_path_1.default.resolve(__dirname, '../.env'),
 });
 const app_1 = __importDefault(require("./app"));
-const schema_1 = require("./config/schema");
+const schema_1 = require("./mobile/config/schema");
 const port = Number(process.env.PORT) || Number(process.env.MOBILE_PORT) || 5001;
 void (0, schema_1.initializeSchema)()
     .then(() => {

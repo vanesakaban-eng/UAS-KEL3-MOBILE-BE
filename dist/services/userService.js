@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.listAllUsers = listAllUsers;
 exports.getUserById = getUserById;
 exports.updateUserRole = updateUserRole;
-const db_1 = __importDefault(require("../config/db"));
+const db_1 = __importDefault(require("../mobile/config/db"));
 const auditService_1 = require("./auditService");
 async function listAllUsers(adminId) {
     const [rows] = await db_1.default.query('SELECT id, nama, email, whatsapp, role, COALESCE(createdAt, NOW()) as created_at FROM users ORDER BY id DESC');
