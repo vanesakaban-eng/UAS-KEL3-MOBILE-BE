@@ -2,7 +2,7 @@ import { Response, Router } from 'express';
 import { RowDataPacket } from 'mysql2';
 import db from '../config/db';
 import { AuthenticatedRequest, requireAuth, requireRole } from '../middleware/authMiddleware';
-import { generateFinancialInsight, verifyAiResult } from '../services/ai/aiService';
+import { generateFinancialInsight, verifyAiResult } from '../../services/ai/aiService';
 
 const router = Router();
 

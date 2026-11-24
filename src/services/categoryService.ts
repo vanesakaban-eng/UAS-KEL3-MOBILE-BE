@@ -1,5 +1,5 @@
 import { RowDataPacket } from 'mysql2';
-import db from '../config/db';
+import db from '../mobile/config/db';
 import { logAudit } from './auditService';
 
 export interface MasterCategory {

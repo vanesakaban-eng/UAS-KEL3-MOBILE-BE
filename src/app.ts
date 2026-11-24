@@ -1,12 +1,20 @@
 import cors from 'cors';
 import express, { Application, Request, Response, NextFunction } from 'express';
-import db from './config/db';
-import aiRoutes from './routes/aiRoutes';
-import auditRoutes from './routes/auditRoutes';
-import categoryRoutes from './routes/categoryRoutes';
-import dashboardRoutes from './routes/dashboardRoutes';
-import mobileRoutes from './routes/mobileRoutes';
-import userRoutes from './routes/userRoutes';
+import db from './mobile/config/db';
+import aiRoutes from './mobile/routes/aiRoutes';
+import auditRoutes from './mobile/routes/auditRoutes';
+import categoryRoutes from './mobile/routes/categoryRoutes';
+import dashboardRoutes from './mobile/routes/dashboardRoutes';
+import mobileRoutes from './mobile/routes/mobileRoutes';
+import userRoutes from './mobile/routes/userRoutes';
+
+// Web
+import authRoutes from './web/routes/authRoutes';
+import DashboardRoutes from './web/routes/dashboardRoutes';
+import UserRoutes from './web/routes/userRoutes';
+import CategoryRoutes from './web/routes/categoryRoutes';
+import settingsRoutes from './web/routes/settingRoutes';
+import featureUsageRoutes from './web/routes/featureUsageRoutes';
 
 const app: Application = express();
 
@@ -29,8 +37,8 @@ app.get('/', (_req: Request, res: Response) => {
     description: 'REST API tunggal yang melayani Mobile Flutter dan Web Admin Next.js',
     endpoints: {
       auth: '/api/auth/*',
-      users: '/api/users',
-      categories: '/api/categories',
+      users: '/api/users & /api/users/web',
+      categories: '/api/categories & /api/categories/web',
       transactions: '/api/transactions',
       dashboard: '/api/dashboard/web & /api/dashboard',
       ai: '/api/ai/analyze, /api/ai/pending, /api/ai/:id/verify',
@@ -45,9 +53,22 @@ app.get('/api/health', async (_req: Request, res: Response) => {
     await db.query('SELECT 1');
     res.status(200).json({ status: 'ok', service: 'uku-single-backend', database: 'connected' });
   } catch (err: any) {
-    res.status(503).json({ status: 'error', service: 'uku-single-backend', database: 'unavailable', error: err.message });
+    res.status(503).json({
+      status: 'error',
+      service: 'uku-single-backend',
+      database: 'unavailable',
+      error: err.message,
+    });
   }
 });
+
+// Web Admin Routes (Next.js)
+app.use('/api/auth', authRoutes);
+app.use('/api/dashboard/web', DashboardRoutes);
+app.use('/api/users/web', UserRoutes);
+app.use('/api/categories/web', CategoryRoutes);
+app.use('/api/settings', settingsRoutes);
+app.use('/api/feature-usage', featureUsageRoutes);
 
 // Register Modular Routers (Sesuai Diagram Skema Single Backend)
 app.use('/api/categories', categoryRoutes);
@@ -59,7 +80,7 @@ app.use('/api/audit-logs', auditRoutes);
 // Mobile & Core Finansial Routes (Kompatibel penuh dengan Flutter App)
 app.use('/api', mobileRoutes);
 
-// Global Error Handler
+// Global Error Handler (HARUS di paling bawah)
 app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
   console.error('[Unhandled Error]:', err);
   res.status(500).json({

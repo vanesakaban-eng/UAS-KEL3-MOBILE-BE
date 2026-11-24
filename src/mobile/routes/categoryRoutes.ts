@@ -5,7 +5,7 @@ import {
   deleteCategory,
   listCategories,
   updateCategory,
-} from '../services/categoryService';
+} from '../../services/categoryService';
 
 const router = Router();
 

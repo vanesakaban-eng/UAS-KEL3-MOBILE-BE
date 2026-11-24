@@ -1,5 +1,5 @@
 import { RowDataPacket } from 'mysql2';
-import db from '../config/db';
+import db from '../mobile/config/db';
 
 export async function getWebDashboardData() {
   // 1. Hitung total user & aktivitas (case-insensitive role)

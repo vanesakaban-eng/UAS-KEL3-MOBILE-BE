@@ -2,7 +2,7 @@ import { Router } from 'express';
 import { RowDataPacket } from 'mysql2';
 import db from '../config/db';
 import { AuthenticatedRequest, requireAuth, requireRole } from '../middleware/authMiddleware';
-import { getWebDashboardData } from '../services/dashboardService';
+import { getWebDashboardData } from '../../services/dashboardService';
 
 const router = Router();
 

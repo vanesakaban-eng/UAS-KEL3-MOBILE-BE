@@ -1,5 +1,5 @@
 import { Request } from 'express';
-import db from '../config/db';
+import db from '../mobile/config/db';
 
 export interface AuditLogParams {
   userId?: number | null;

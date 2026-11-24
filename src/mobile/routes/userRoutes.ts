@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { AuthenticatedRequest, requireAuth, requireRole } from '../middleware/authMiddleware';
-import { getUserById, listAllUsers, updateUserRole } from '../services/userService';
+import { getUserById, listAllUsers, updateUserRole } from '../../services/userService';
 
 const router = Router();
 

@@ -6,7 +6,7 @@ dotenv.config({
 });
 
 import app from './app';
-import { initializeSchema } from './config/schema';
+import { initializeSchema } from './mobile/config/schema';
 
 const port = Number(process.env.PORT) || Number(process.env.MOBILE_PORT) || 5001;
 
